@@ -30,15 +30,17 @@ class App extends React.Component {
       twitterUsername: "",
     },
     animation: "nodiv",
-    statList : [],
+    statList: [],
+    currentStat : 0,
+    animateStatTask: null,
   };
-
   constructor(props = {}) {
     super(props);
     this.profileClicked = this.profileClicked.bind(this);
     this.animationEnded = this.animationEnded.bind(this);
     this.getGithubChildren = this.getGithubChildren.bind(this);
     this.getGithubStats = this.getGithubStats.bind(this);
+    this.getSocials = this.getSocials.bind(this);
   }
   componentDidMount() {
     var url = "https://api.github.com/graphql";
@@ -82,10 +84,32 @@ class App extends React.Component {
       })
       .catch(console.error);
   }
+  componentWillUnmount() {
+    clearInterval(this.state.animateStatTask);
+  }
   profileClicked(event) {
+    if(this.state.animation == 'nodiv') return;
+    var currentStat = this.state.currentStat;
+    currentStat += 1;
+    currentStat = currentStat%3;
+    this.setState({
+      currentStat : currentStat
+    });
+    if (typeof event != 'undefined' && event!=null)event.preventDefault();
+  }
+  animationEnded(event) {
+    var list = [];
+    list.push(this.getGithubChildren);
+    list.push(this.getGithubStats);
+    list.push(this.getSocials);
+    var t = setInterval(this.profileClicked,5000);
+    this.setState({
+      statList : list,
+      currentStat : 0,
+      animateStatTask : t
+    });
     event.preventDefault();
   }
-  animationEnded(event) {}
   getGithubChildren() {
     return (
       <div className="statsChild">
@@ -115,13 +139,15 @@ class App extends React.Component {
           />
           <span className="statspan">{this.state.user.issuesCount}</span>
         </div>
-        <div className="stat item" title="Contributions">
+        <div className="stat item" title="Pull Requests">
           <img
             className="statspan"
             src="https://img.icons8.com/ultraviolet/48/000000/pull-request.png"
-            alt="Total Pull Requests"
+            alt="Pull Requests"
           />
-          <span className="statspan">{this.state.user.repositoriesContributedToCount}</span>
+          <span className="statspan">
+            {this.state.user.pullRequestsCount}
+          </span>
         </div>
       </div>
     );
@@ -145,7 +171,9 @@ class App extends React.Component {
             alt="Stars"
             src="https://img.icons8.com/doodle/48/000000/star--v1.png"
           />
-          <span className="statspan">{this.state.user.starredRepositoriesCount}</span>
+          <span className="statspan">
+            {this.state.user.starredRepositoriesCount}
+          </span>
         </div>
         <div className="stat item" title="Following">
           <img
@@ -157,6 +185,44 @@ class App extends React.Component {
           />
           <span className="statspan">{this.state.user.followingCount}</span>
         </div>
+      </div>
+    );
+  }
+  getSocials() {
+    return(
+      <div className="statsChild">
+        <a href="https://discord.gg/SyycB82">
+        <div className="stat item" title="Discord">
+          <img
+            className="statspan"
+            alt="Discord"
+            src="https://img.icons8.com/dusk/48/000000/discord-logo.png"
+          />
+          <span className="statspan">🟢</span>
+        </div>
+        </a>
+        <a href={"https://twitter.com/"+this.state.user.twitterUsername}>
+        <div className="stat item" title="Twitter">
+          <img
+            className="statspan"
+            alt={this.state.user.twitterUsername}
+            src="https://img.icons8.com/fluent/48/000000/twitter.png"
+          />
+          <span className="statspan">
+            {this.state.user.twitterUsername}
+          </span>
+        </div>
+        </a>
+        <a href="https://www.paypal.me/deadGray">
+        <div className="stat item" title="Sponsor">
+          <img
+            className="statspan"
+            src="https://img.icons8.com/officel/48/000000/crowdfunding.png"
+            alt="Sponsor"
+          />
+          <span className="statspan" role="img" aria-label="Sponsor Me">💲</span>
+        </div>
+        </a>
       </div>
     );
   }
@@ -174,7 +240,16 @@ class App extends React.Component {
             onClick={this.profileClicked}
             className="profile image"
           />
-          <img className="profile avalibility" />
+          <img
+            className="avalibility"
+            src={
+              this.state.user.isHireable
+                ? "https://img.icons8.com/emoji/48/000000/green-circle-emoji.png"
+                : "https://img.icons8.com/emoji/48/000000/red-circle-emoji.png"
+            }
+            alt={this.state.user.isHireable?"available":"un-available"}
+            title={this.state.user.isHireable?"Available":"Not Available"}
+          />
         </div>
         <div
           className={this.state.animation}
@@ -187,13 +262,13 @@ class App extends React.Component {
               rel="noopener noreferrer"
               target="_blank"
             >
-              <span title="username">{this.state.user.name}</span>
+              <span className="username" title="username">{this.state.user.name}</span>
             </a>
             <span className="userstatus" title="Status">
               {this.state.user.status}
             </span>
           </div>
-          {this.getGithubChildren()}
+          {this.state.statList.length>0?this.state.statList[this.state.currentStat]():null}
         </div>
       </div>
     );
