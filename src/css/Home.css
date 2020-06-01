@@ -22,7 +22,6 @@ a {
   width: 100%;
   height: 100vh;
 }
-
 .profile.image {
   border-radius: 50%;
 }
@@ -99,6 +98,7 @@ a {
 .stat.item {
   display: inline-grid;
   transition: background 0.8s;
+  animation: fadein-animation 5s infinite;
   width: 100%;
   background-position: center;
   height: 100%;
@@ -117,61 +117,9 @@ a {
   color: white;
   font-size: small;
 }
-
 .followerIcon {
   width: 30px;
   height: 30px;
-}
-.noise {
-  position: fixed;
-  top: -50%;
-  left: -50%;
-  right: -50%;
-  bottom: -50%;
-  width: 200%;
-  height: 200vh;
-  background: transparent
-    url("http://assets.iceable.com/img/noise-transparent.png") repeat 0 0;
-  background-repeat: repeat;
-  animation: bg-animation 0.2s infinite;
-  opacity: 0.9;
-  visibility: visible;
-}
-
-@keyframes bg-animation {
-  0% {
-    transform: translate(0, 0);
-  }
-  10% {
-    transform: translate(-5%, -5%);
-  }
-  20% {
-    transform: translate(-10%, 5%);
-  }
-  30% {
-    transform: translate(5%, -10%);
-  }
-  40% {
-    transform: translate(-5%, 15%);
-  }
-  50% {
-    transform: translate(-10%, 5%);
-  }
-  60% {
-    transform: translate(15%, 0);
-  }
-  70% {
-    transform: translate(0, 10%);
-  }
-  80% {
-    transform: translate(-15%, 0);
-  }
-  90% {
-    transform: translate(10%, 5%);
-  }
-  100% {
-    transform: translate(5%, 0);
-  }
 }
 
 @keyframes movein-animation {
@@ -241,5 +189,41 @@ a {
   100% {
     bottom: 1.5%;
     display: block;
+  }
+}
+
+@keyframes fadein-animation {
+  0% {
+    border: 0px dotted #212121;
+  }
+  10% {
+    border: 0.5px dotted #212121;
+  }
+  20% {
+    border: 0.6px dotted #3a3434;
+  }
+  30% {
+    border: 0.7px dotted #644a4a;
+  }
+  40% {
+    border: 0.8px dotted #8a5a5a;
+  }
+  50% {
+    border: 0.9px dotted #b15858;
+  }
+  60% {
+    border: 1px solid #a14242;
+  }
+  70% {
+    border: 1.1px solid #c23838;
+  }
+  80% {
+    border: 1.2px solid #bd1a1a;
+  }
+  90% {
+    border: 1.3px solid #c92a2a;
+  }
+  100% {
+    border: 1.4px solid #ff0000;
   }
 }

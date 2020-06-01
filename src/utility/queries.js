@@ -1,4 +1,4 @@
-const oneBigQuery = `
+export const oneBigQuery = `
 query user {
     user(login: "GrayHat12") {
       avatarUrl
@@ -44,5 +44,30 @@ query user {
     }
   }
 `;
-
-export default oneBigQuery;
+export const ReposQuery = `
+{
+  user(login: "GrayHat12") {
+    login
+    repositories(last: 100) {
+      nodes {
+        createdAt
+        description
+        forkCount
+        homepageUrl
+        isFork
+        isPrivate
+        isTemplate
+        name
+        nameWithOwner
+        url
+        languages(first: 100) {
+          nodes {
+            name
+            color
+          }
+        }
+      }
+    }
+  }
+}
+`;
