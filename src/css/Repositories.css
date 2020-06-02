@@ -6,12 +6,19 @@ html {
   font-size: medium;
   cursor: url("../assets/cursors/touch-pad/Touch-alternate.cur"), auto;
 }
+input:hover {
+  cursor: url("../assets/cursors/touch-pad/Touch-link.cur"), auto;
+  background-color: #eb3c00;
+}
+input {
+  background-color: #f88070;
+}
 body {
   margin: 0;
   overflow-x: hidden;
 }
 div {
-  transition: background-color 0.3s ease;
+  transition: background-color 0.5s ease;
 }
 a {
   text-decoration: wavy;
@@ -26,6 +33,18 @@ ol {
   overflow-y: auto;
   height: -webkit-fill-available;
 }
+.loading {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  animation: blip 0.3s alternate-reverse infinite;
+  margin: auto;
+}
+.loading:hover {
+  animation: blip 0.1s alternate-reverse infinite;
+}
 ::-webkit-scrollbar {
   width: 2px;
   color: #3486c5;
@@ -37,6 +56,9 @@ ol {
   margin-bottom: 10px;
   background-color: #202020;
 }
+.repoItem.selected {
+  background-color: #104b8d;
+}
 .repos {
   width: 100vw;
   height: 100vh;
@@ -44,6 +66,7 @@ ol {
 }
 .repoItem:hover {
   background-color: #3486c5;
+  animation: blip 0.1s alternate-reverse infinite;
 }
 .repoItem:active {
   background-color: #104b8d;
@@ -56,7 +79,6 @@ ol {
   color: #eee;
   display: block;
   justify-content: center;
-  /*align-items: center;*/
   perspective: 1000px;
   perspective-origin: 50% 50%;
   animation: animation 500s linear infinite;
@@ -70,6 +92,39 @@ ol {
 }
 .repoImage {
   border-radius: 50%;
+  z-index: 20;
+  animation: blip 0.5s alternate-reverse infinite;
+}
+.repoImage:hover {
+  transform: scale(1.05);
+  animation: blip 0.1s alternate-reverse infinite;
+}
+.repoImage.withLink:hover {
+  border: 5px dashed #21e86d;
+}
+.repoImage.noLink:hover {
+  border: 5px dashed #ff9d35;
+}
+.repoImage.withLink:active {
+  border: 5px dashed rgb(5, 78, 33);
+}
+.repoImage.noLink:active {
+  border: 5px dashed #c03421;
+}
+.stat {
+  border-radius: 5px;
+}
+.stat:hover {
+  border: 1px dashed #212E3A;
+  animation: blip 0.2s alternate-reverse infinite;
+  padding: 5px;
+  cursor: url("../assets/cursors/touch-pad/Touch-link.cur"), auto;
+}
+.stat:active {
+  background-color: #26e86f;
+}
+.check {
+  background-color: #eb3c00;
 }
 .imageDiv {
   width: fit-content;
@@ -95,6 +150,70 @@ ol {
 .starTxt {
   text-align: center;
 }
+
+.issuesDiv {
+  width: fit-content;
+  height: fit-content;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  display: inline-block;
+}
+.issueImg {
+  display: block;
+}
+.issueTxt {
+  text-align: center;
+}
+.githubDiv {
+  width: 300px;
+  height: 300px;
+  z-index: -10;
+  animation: spin-right 36.5s linear infinite;
+  position: fixed;
+  top: calc(50% - 152px);
+  left: calc(65% - 152px);
+  border-radius: 50%;
+  display: inline-block;
+}
+.githubImg {
+  display: block;
+  animation: spin-right 1s linear infinite;
+}
+.githubImg:hover {
+  border-radius: 50%;
+  background-color: #ff9d35;
+  animation: blip 0.1s alternate-reverse infinite;
+}
+.memoryDiv {
+  width: fit-content;
+  height: fit-content;
+  position: fixed;
+  bottom: 10px;
+  left: calc(30% + 10px);
+  display: inline-block;
+}
+.memoryImg {
+  display: block;
+}
+.memoryTxt {
+  text-align: center;
+}
+.collabsDiv {
+  width: fit-content;
+  height: fit-content;
+  position: fixed;
+  bottom: 10px;
+  left: calc(65% - 20px);
+  display: inline-block;
+}
+.collabImg {
+  display: block;
+}
+.collabTxt {
+  text-align: center;
+}
+
 .forksDiv {
   width: fit-content;
   height: fit-content;
@@ -109,6 +228,47 @@ ol {
 .forkTxt {
   text-align: center;
 }
+.commitsDiv {
+  width: fit-content;
+  height: fit-content;
+  position: fixed;
+  top: 10px;
+  left: calc(65% - 20px);
+  display: inline-block;
+}
+.commitImg {
+  display: block;
+}
+.commitTxt {
+  text-align: center;
+}
+.langsDiv {
+  top: calc(40px + 48px);
+  left: 30%;
+  display: grid;
+  position: fixed;
+  width: fit-content;
+  min-width: 75px;
+  height: auto;
+  animation: moveIn 2s;
+}
+.language {
+  justify-self: center;
+  width: -webkit-fill-available;
+  text-align: center;
+  padding: 2px;
+  margin: 5px;
+}
+.language:hover {
+  background-color: #eb3c00 !important;
+  animation: blip 0.2s alternate-reverse infinite;
+}
+.language:active {
+  background-color: #f88070 !important;
+}
+.inputLabel {
+  font-size: medium;
+}
 .title {
   font-size: xx-large;
   margin: 10px;
@@ -118,6 +278,9 @@ ol {
   padding: 2px;
   height: fit-content;
 }
+.title:hover {
+  animation: blip 0.1s alternate-reverse infinite;
+}
 .repoItemLeft {
   font-size: larger;
   margin-left: 10px;
@@ -125,5 +288,44 @@ ol {
 @keyframes animation {
   100% {
     background-position: 0px -3000px;
+  }
+}
+@keyframes spin-right {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes moveIn {
+  0% {
+    left: 130%;
+  }
+  100% {
+    left: 30%;
+  }
+}
+
+@keyframes forksanim {
+  0% {
+    top: calc(100% + 10px);
+  }
+  100% {
+    top: 10px;
+  }
+}
+
+@keyframes memAnim {
+  0% {
+    bottom: calc(100% + 10px);
+  }
+  100% {
+    bottom: 10px;
+  }
+}
+@keyframes blip {
+  0% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
   }
 }

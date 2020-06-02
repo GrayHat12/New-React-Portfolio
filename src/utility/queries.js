@@ -52,7 +52,9 @@ export const ReposQuery = `
       nodes {
         createdAt
         description
-        forkCount
+        forks {
+          totalCount
+        }
         homepageUrl
         isFork
         isPrivate
@@ -69,13 +71,25 @@ export const ReposQuery = `
         stargazers {
           totalCount
         }
-        forkCount
         object(expression: "master") {
           ... on Commit {
             history {
               totalCount
             }
           }
+        }
+        deployments {
+          totalCount
+        }
+        diskUsage
+        releases {
+          totalCount
+        }
+        issues {
+          totalCount
+        }
+        collaborators {
+          totalCount
         }
       }
     }
