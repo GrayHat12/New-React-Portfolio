@@ -233,7 +233,7 @@ class Repositories extends React.Component {
               index={`${i}`}
               alt="forked"
               className="repoItemRight"
-              src="https://img.icons8.com/ultraviolet/21/000000/pull-request.png"
+              src="https://img.icons8.com/ultraviolet/16/000000/pull-request.png"
             ></img>
           ) : (
             <span
@@ -243,7 +243,8 @@ class Repositories extends React.Component {
                 this.state.repoListData[i].isPrivate ? "Private" : "Public"
               }
             >
-              {this.state.repoListData[i].isPrivate ? "🔴" : "🟢"}
+            <img src={this.state.repoListData[i].isPrivate? "https://img.icons8.com/emoji/16/000000/green-circle-emoji.png":"https://img.icons8.com/emoji/16/000000/red-circle-emoji.png"}
+            alt={this.state.repoListData[i].isPrivate ? "Private" : "Public"}/>
             </span>
           )}
           <span index={`${i}`} className="repoItemLeft">
