@@ -24,6 +24,10 @@ a {
 }
 .profile.image {
   border-radius: 50%;
+  animation: blip 0.5s alternate-reverse infinite;
+}
+.profile.image:hover {
+  animation: blip 0.05s alternate-reverse infinite;
 }
 .profile.image:hover {
   border: 5px dashed #ffca28;
@@ -39,7 +43,7 @@ a {
   left: 0;
   margin: auto;
   right: 0;
-  bottom: 10%;
+  bottom: 40%;
 }
 .nodiv {
   display: none;
@@ -121,7 +125,33 @@ a {
   width: 30px;
   height: 30px;
 }
-
+.codersrank {
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: fit-content;
+  bottom: 30%;
+  display: grid;
+  margin: auto;
+}
+.codersrank:hover {
+  background-color: #B392F0;
+  animation: blip 0.5s alternate-reverse infinite;
+  padding: 5px;
+  color: white;
+}
+.scorecr {
+  animation: blip 2s alternate-reverse infinite;
+}
+.rankcr {
+  animation: blip 2.1s alternate-reverse infinite;
+}
+.totalcr {
+  animation: blip 1.9s alternate-reverse infinite;
+}
+.loading:hover {
+  animation: blip 0.1s alternate-reverse infinite;
+}
 @keyframes movein-animation {
   0% {
     display: none;
@@ -225,5 +255,20 @@ a {
   }
   100% {
     border: 1.4px solid #ff0000;
+  }
+}
+
+@keyframes blip {
+  0% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes spin-right {
+  100% {
+    transform: rotate(360deg);
   }
 }

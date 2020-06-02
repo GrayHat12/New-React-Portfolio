@@ -1,10 +1,11 @@
 import React from "react";
 import "../css/Home.css";
 import axios from "axios";
-import {oneBigQuery} from "../utility/queries";
+import { oneBigQuery } from "../utility/queries";
 import followerIcon from "../assets/svg/user.svg";
 import followingIcon from "../assets/svg/follow.svg";
 import secret from "../settings/secret.json";
+import loadingImg from "../assets/svg/810.svg";
 import packageIcon from "../assets/svg/box.svg";
 
 class Home extends React.Component {
@@ -29,6 +30,13 @@ class Home extends React.Component {
       status: "",
       twitterUsername: "",
     },
+    codersrank: {
+      totalScore: 0,
+      positionWorldWide: 0,
+      worldWideAll: 0,
+      updatedProfileAt: "",
+      profile: "https://profile.codersrank.io/user/grayhat12",
+    },
     animation: "nodiv",
     statList: [],
     currentStat: 0,
@@ -44,6 +52,7 @@ class Home extends React.Component {
   }
   componentDidMount() {
     var url = "https://api.github.com/graphql";
+    document.getElementsByTagName("title")[0].text = "GrayHat12";
     var headers = {
       Authorization: "Bearer " + secret.github_token,
       "Content-Type": "application/json",
@@ -83,6 +92,26 @@ class Home extends React.Component {
         }
       })
       .catch(console.error);
+    axios
+      .post("https://api.codersrank.io/app/candidate/GetScore", {
+        username: "grayhat12",
+      })
+      .then((val) => {
+        val = val.data;
+        try {
+          var tmp = this.state.codersrank;
+          tmp.positionWorldWide = val.positionWorldWide;
+          tmp.totalScore = val.totalScore;
+          tmp.updatedProfileAt = val.updatedProfileAt;
+          tmp.worldWideAll = val.worldWideAll;
+          this.setState({
+            codersrank: tmp,
+          });
+        } catch (ex) {
+          console.error(ex);
+        }
+      })
+      .catch(console.error);
   }
   componentWillUnmount() {
     clearInterval(this.state.animateStatTask);
@@ -113,7 +142,9 @@ class Home extends React.Component {
   getGithubChildren() {
     return (
       <div className="statsChild">
-        <div className="stat item" title="Repositories"
+        <div
+          className="stat item"
+          title="Repositories"
           onClick={(event) => {
             this.props.history.push("/repos");
             event.preventDefault();
@@ -126,7 +157,7 @@ class Home extends React.Component {
           />
           <span className="statspan">{this.state.user.repositoriesCount}</span>
         </div>
-        <div className="stat item" title="Packages" >
+        <div className="stat item" title="Packages">
           <img
             className="statspan"
             width="48"
@@ -253,6 +284,17 @@ class Home extends React.Component {
             title={this.state.user.isHireable ? "Available" : "Not Available"}
           />
         </div>
+        {this.state.codersrank.worldWideAll === 0 ? (
+          <img src={loadingImg} alt="Loading" className="loading" />
+        ) : (
+          <a href={this.state.codersrank.profile} target="_blank" rel="noopener noreferrer">
+          <div className="codersrank" title={"Top "+parseInt((this.state.codersrank.positionWorldWide/this.state.codersrank.worldWideAll)*100) + "% Worldwide"}>
+            <span className="scorecr">{this.state.codersrank.totalScore+" Points"}</span>
+            <span className="rankcr">{"Top "+parseInt((this.state.codersrank.positionWorldWide/this.state.codersrank.worldWideAll)*100) + "% Worldwide"}</span>
+            <span className="totalcr">Of total {parseInt(this.state.codersrank.worldWideAll/1000)}K users</span>
+          </div>
+          </a>
+        )}
         <div
           className={this.state.animation}
           onAnimationEnd={this.animationEnded}
