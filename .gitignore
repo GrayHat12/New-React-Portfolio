@@ -27,3 +27,4 @@ secret.json
 /.firebase
 firebase.json
 .firebaserc
+*.log
