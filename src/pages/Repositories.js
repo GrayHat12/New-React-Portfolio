@@ -243,7 +243,7 @@ class Repositories extends React.Component {
                 this.state.repoListData[i].isPrivate ? "Private" : "Public"
               }
             >
-            <img src={this.state.repoListData[i].isPrivate? "https://img.icons8.com/emoji/16/000000/green-circle-emoji.png":"https://img.icons8.com/emoji/16/000000/red-circle-emoji.png"}
+            <img src={this.state.repoListData[i].isPrivate?"https://img.icons8.com/emoji/16/000000/red-circle-emoji.png":"https://img.icons8.com/emoji/16/000000/green-circle-emoji.png"}
             alt={this.state.repoListData[i].isPrivate ? "Private" : "Public"}/>
             </span>
           )}
