@@ -66,6 +66,17 @@ export const ReposQuery = `
             color
           }
         }
+        stargazers {
+          totalCount
+        }
+        forkCount
+        object(expression: "master") {
+          ... on Commit {
+            history {
+              totalCount
+            }
+          }
+        }
       }
     }
   }

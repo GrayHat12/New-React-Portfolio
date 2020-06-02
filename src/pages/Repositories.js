@@ -38,7 +38,10 @@ class Repositories extends React.Component {
               homepageUrl: val[i].homepageUrl,
               isFork: val[i].isFork,
               isPrivate: val[i].isPrivate,
+              forks : val[i].forkCount,
+              commits : val[i].object.history.totalCount,
               isTemplate: val[i].isTemplate,
+              stargazers : val[i].stargazers.totalCount,
               name: val[i].name,
               languages: val[i].languages.nodes,
               nameWithOwner: val[i].nameWithOwner,
@@ -60,27 +63,32 @@ class Repositories extends React.Component {
   clickedRepoItem(index) {
     var repo = this.state.repoListData[index];
     var createdDate = repo.createdAt.split("T")[0].split("-"); //YYYY-MM-DD format
-    var description = repo.description;
-    var forkCount = repo.forkCount;
-    var homepageUrl = repo.homepageUrl;
-    var isForked = repo.isFork;
-    var isPrivate = repo.isPrivate;
-    var languages = repo.languages;
-    var isTemplate = repo.isTemplate;
     var name = repo.name;
-    var matches = name.match(/^(\w)|-(\w)/g);
+    var matches = name.match(/^(\w)|-(\w)|([A-Z])/g);
     var acronym = matches.join("");
     acronym = acronym.replace(/-/g,'');
-    var nameWithOwner = repo.nameWithOwner;
-    var url = repo.url;
     var selectedRepo = (
       <div className="RestScreen">
+        <div className="imageDiv">
+        <div className="starsDiv" title={repo.stargazers+" Stars"}>
+          <img className="starImg" alt="stars" src="https://img.icons8.com/doodle/48/000000/star--v1.png"/>
+          <div className="starTxt">{repo.stargazers}</div>
+        </div>
+        <div className="forksDiv" title={repo.forks+" Forks"}>
+          <img className="forkImg" alt="forks" src="https://img.icons8.com/ultraviolet/48/000000/pull-request.png"/>
+          <div className="forkTxt">{repo.forks}</div>
+        </div>
+        <div className="commitsDiv" title={repo.commits+" Commits"}>
+          <img className="commitImg" alt="commits" src="https://img.icons8.com/dusk/48/000000/commit-git.png"/>
+          <div className="commitTxt">{repo.commits}</div>
+        </div>
         <img
           className="repoImage"
           alt="repoImage"
-          src={`https://dummyimage.com/280/9233E3/ffffff.png&text=${acronym}`}
+          src={`https://dummyimage.com/220/9233E3/ffffff.png&text=${acronym.slice(0,2).toUpperCase()}`}
           title={name}
         />
+        </div>
       </div>
     );
     this.setState({
