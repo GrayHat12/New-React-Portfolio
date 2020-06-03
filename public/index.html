@@ -8,7 +8,11 @@
       name="description"
       content="Web site created using create-react-app"
     />
-    <link rel="shortcut icon" href="https://img.icons8.com/color/32/000000/github-2.png" type="image/x-icon"/>
+    <link
+      rel="shortcut icon"
+      href="https://img.icons8.com/color/32/000000/github-2.png"
+      type="image/x-icon"
+    />
     <title>React App</title>
   </head>
   <body>
@@ -63,9 +67,51 @@
           transform: translate(5%, 0);
         }
       }
+      #root {
+        z-index: 10;
+      }
+      .credits {
+        position: fixed;
+        z-index: 22;
+        width: fit-content;
+        height: fit-content;
+        right: -80px;
+        top: 40%;
+        transform: rotate(-90deg);
+        display: inline-block;
+        color: white;
+        padding: 10px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 3px;
+        background-color: brown;
+      }
+      .credits:hover {
+        transform: scale(1.1) rotate(-90deg);
+        color: burlywood;
+        background-color: #7E7E7E;
+      }
+      .credits:active {
+        transform: scale(0.9) rotate(-90deg);
+        color: white;
+        background-color: #913B9F;
+      }
+      .smallCred {
+        font-size: smaller;
+      }
+      .BigCred {
+        font-size: xx-large;
+      }
     </style>
-    <a style="display: none;" href="https://icons8.com/icon/SyIpM4vSpYTF/github">GitHub icon by Icons8</a>
+    <a style="display: none;" href="https://icons8.com/icon/SyIpM4vSpYTF/github"
+      >GitHub icon by Icons8</a
+    >
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <a href="https://github.com/GrayHat12" target="_blank">
+      <div class="credits">
+        <span class="smallCred">Credits</span>
+        <span class="BigCred">GrayHat12</span>
+      </div>
+    </a>
   </body>
 </html>
