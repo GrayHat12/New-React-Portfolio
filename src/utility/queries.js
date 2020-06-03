@@ -1,6 +1,7 @@
+import settings from '../settings/secret.json';
 export const oneBigQuery = `
 query user {
-    user(login: "GrayHat12") {
+    user(login: "${settings.github_username}") {
       avatarUrl
       bio
       email
@@ -46,7 +47,7 @@ query user {
 `;
 export const ReposQuery = `
 {
-  user(login: "GrayHat12") {
+  user(login: "${settings.github_username}") {
     login
     repositories(last: 100) {
       nodes {

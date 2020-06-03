@@ -22,7 +22,7 @@ class Repositories extends React.Component {
   }
   componentDidMount() {
     var url = "https://api.github.com/graphql";
-    document.getElementsByTagName("title")[0].text = "GrayHat12";
+    document.getElementsByTagName("title")[0].text = secret.github_username;
     var headers = {
       Authorization: "Bearer " + secret.github_token,
       "Content-Type": "application/json",
@@ -91,7 +91,7 @@ class Repositories extends React.Component {
   clickedRepoItem(index) {
     var repo = this.state.repoListData[index];
     var name = repo.name;
-    document.getElementsByTagName("title")[0].text = "GrayHat12/"+name;
+    document.getElementsByTagName("title")[0].text = secret.github_username+"/"+name;
     var selectedRepo = (
       <div className="RestScreen">
         <div className="imageDiv">
@@ -257,7 +257,6 @@ class Repositories extends React.Component {
     return outp;
   }
   changeFilter(event) {
-    console.log(event, event.target.value, event.target.checked);
     event.persist();
     if (event.target.value === "Public" && this.state.filters === 0) {
       this.setState({

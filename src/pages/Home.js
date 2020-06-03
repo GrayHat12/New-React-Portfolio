@@ -35,7 +35,7 @@ class Home extends React.Component {
       positionWorldWide: 0,
       worldWideAll: 0,
       updatedProfileAt: "",
-      profile: "https://profile.codersrank.io/user/grayhat12",
+      profile: "https://profile.codersrank.io/user/"+secret.github_username,
     },
     animation: "nodiv",
     statList: [],
@@ -52,7 +52,7 @@ class Home extends React.Component {
   }
   componentDidMount() {
     var url = "https://api.github.com/graphql";
-    document.getElementsByTagName("title")[0].text = "GrayHat12";
+    document.getElementsByTagName("title")[0].text = secret.github_username;
     var headers = {
       Authorization: "Bearer " + secret.github_token,
       "Content-Type": "application/json",
@@ -94,7 +94,7 @@ class Home extends React.Component {
       .catch(console.error);
     axios
       .post("https://api.codersrank.io/app/candidate/GetScore", {
-        username: "grayhat12",
+        username: secret.github_username,
       })
       .then((val) => {
         val = val.data;
@@ -142,9 +142,7 @@ class Home extends React.Component {
   getGithubChildren() {
     return (
       <div className="statsChild">
-        <div
-          className="stat item"
-          title="Repositories"
+        <div className="stat item" title="Repositories"
           onClick={(event) => {
             this.props.history.push("/repos");
             event.preventDefault();
@@ -266,7 +264,7 @@ class Home extends React.Component {
         <div className="profile">
           <img
             src={this.state.user.avatarUrl}
-            alt="GrayHat12"
+            alt={secret.github_username}
             width="280"
             title={this.state.user.name}
             height="280"
@@ -288,9 +286,9 @@ class Home extends React.Component {
           <img src={loadingImg} alt="Loading" className="loading" />
         ) : (
           <a href={this.state.codersrank.profile} target="_blank" rel="noopener noreferrer">
-          <div className="codersrank" title={"Top "+parseInt((this.state.codersrank.positionWorldWide/this.state.codersrank.worldWideAll)*100) + "% Worldwide"}>
+          <div className="codersrank" title={"Top "+Math.ceil((this.state.codersrank.positionWorldWide/this.state.codersrank.worldWideAll)*100) + "% Worldwide"}>
             <span className="scorecr">{this.state.codersrank.totalScore+" Points"}</span>
-            <span className="rankcr">{"Top "+parseInt((this.state.codersrank.positionWorldWide/this.state.codersrank.worldWideAll)*100) + "% Worldwide"}</span>
+            <span className="rankcr">{"Top "+Math.ceil((this.state.codersrank.positionWorldWide/this.state.codersrank.worldWideAll)*100) + "% Worldwide"}</span>
             <span className="totalcr">Of total {parseInt(this.state.codersrank.worldWideAll/1000)}K users</span>
           </div>
           </a>
@@ -302,7 +300,7 @@ class Home extends React.Component {
           <div className="userStat">
             <a
               className="username"
-              href="https://github.com/GrayHat12"
+              href={`https://github.com/${secret.github_username}`}
               rel="noopener noreferrer"
               target="_blank"
             >
