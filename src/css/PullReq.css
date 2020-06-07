@@ -1,0 +1,265 @@
+html {
+  background-color: #111111;
+  color: white;
+  font-family: monospace;
+  user-select: none;
+  font-size: medium;
+  cursor: url("../assets/cursors/touch-pad/Touch-alternate.cur"), auto;
+}
+input:hover {
+  cursor: url("../assets/cursors/touch-pad/Touch-link.cur"), auto;
+  background-color: #eb3c00;
+}
+input {
+  background-color: #f88070;
+}
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+div {
+  transition: background-color 0.5s ease;
+}
+a {
+  text-decoration: wavy;
+  display: contents;
+  cursor: url("../assets/cursors/touch-pad/Touch-link.cur"), auto;
+}
+li {
+  list-style: none;
+}
+ol {
+  padding: 10px;
+  overflow-y: auto;
+  height: -webkit-fill-available;
+}
+.pullreqs {
+  width: 100vw;
+  height: 100vh;
+  display: -webkit-inline-box;
+}
+.Sidebar {
+  width: 30%;
+  height: 100%;
+  overflow: auto;
+  background: url("https://images.unsplash.com/photo-1465146633011-14f8e0781093?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3450&q=80");
+  color: #eee;
+  display: block;
+  justify-content: center;
+  perspective: 1000px;
+  perspective-origin: 50% 50%;
+  animation: animation 500s linear infinite;
+}
+.title {
+  font-size: xx-large;
+  margin: 10px;
+  position: -webkit-sticky;
+  position: sticky;
+  text-align-last: center;
+  padding: 2px;
+  height: fit-content;
+}
+.title:hover {
+  animation: blip 0.1s alternate-reverse infinite;
+}
+.check {
+  background-color: #eb3c00;
+}
+.inputLabel {
+  font-size: medium;
+}
+.prItem {
+  padding: 10px;
+  overflow: auto;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  background-color: #202020;
+}
+.prItem:hover {
+  background-color: #3486c5;
+  animation: blip 0.1s alternate-reverse infinite;
+}
+.starsDiv {
+  width: fit-content;
+  height: fit-content;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  display: inline-block;
+}
+.stat {
+  border-radius: 5px;
+}
+.stat:hover {
+  border: 1px dashed #212E3A;
+  animation: blip 0.2s alternate-reverse infinite;
+  padding: 5px;
+  cursor: url("../assets/cursors/touch-pad/Touch-link.cur"), auto;
+}
+.stat:active {
+  background-color: #26e86f;
+}
+.starImg {
+  display: block;
+}
+.starTxt {
+  text-align: center;
+}
+.forksDiv {
+  width: fit-content;
+  height: fit-content;
+  position: fixed;
+  top: 10px;
+  left: calc(30% + 10px);
+  display: inline-block;
+}
+.forkImg {
+  display: block;
+}
+.forkTxt {
+  text-align: center;
+}
+.changesDiv {
+  width: fit-content;
+  height: fit-content;
+  position: fixed;
+  top: 10px;
+  left: calc(65% - 20px);
+  display: inline-block;
+}
+.changesImg {
+  display: block;
+}
+.changesTxt {
+  text-align: center;
+}
+.labelsDiv {
+  top: calc(40px + 48px);
+  left: 30%;
+  display: grid;
+  position: fixed;
+  width: fit-content;
+  min-width: 75px;
+  height: auto;
+  animation: moveIn 2s;
+}
+.label {
+  justify-self: center;
+  width: -webkit-fill-available;
+  text-align: center;
+  padding: 2px;
+  margin: 5px;
+}
+.label:hover {
+  background-color: #eb3c00 !important;
+  animation: blip 0.2s alternate-reverse infinite;
+}
+.label:active {
+  background-color: #f88070 !important;
+}
+.deletionsDiv {
+  width: fit-content;
+  height: fit-content;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  display: inline-block;
+}
+.deletionImg {
+  display: block;
+}
+.deletionTxt {
+  text-align: center;
+}
+.additionsDiv {
+  width: fit-content;
+  height: fit-content;
+  position: fixed;
+  bottom: 10px;
+  left: calc(30% + 10px);
+  display: inline-block;
+}
+.additionImg {
+  display: block;
+}
+.additionTxt {
+  text-align: center;
+}
+.collabsDiv {
+  width: fit-content;
+  height: fit-content;
+  position: fixed;
+  bottom: 10px;
+  left: calc(65% - 20px);
+  display: inline-block;
+}
+.collabImg {
+  display: block;
+}
+.collabTxt {
+  text-align: center;
+}
+.assocsDiv {
+  width: fit-content;
+  height: fit-content;
+  position: fixed;
+  bottom: 10px;
+  left: calc(65% - 20px);
+  display: inline-block;
+}
+.assocImg {
+  display: block;
+}
+.assocTxt {
+  text-align: center;
+}
+.repoImage {
+  border-radius: 50%;
+  z-index: 20;
+  animation: blip 0.5s alternate-reverse infinite;
+}
+.repoImage:hover {
+  transform: scale(1.05);
+  animation: blip 0.1s alternate-reverse infinite;
+}
+.repoImage.withLink:hover {
+  border: 5px dashed #21e86d;
+}
+.repoImage.noLink:hover {
+  border: 5px dashed #ff9d35;
+}
+.repoImage.withLink:active {
+  border: 5px dashed rgb(5, 78, 33);
+}
+.repoImage.noLink:active {
+  border: 5px dashed #c03421;
+}
+.githubDiv {
+  width: 300px;
+  height: 300px;
+  z-index: -10;
+  animation: spin-right 36.5s linear infinite;
+  position: fixed;
+  top: calc(50% - 152px);
+  left: calc(65% - 152px);
+  border-radius: 50%;
+  display: inline-block;
+}
+.githubImg {
+  display: block;
+  animation: spin-right 1s linear infinite;
+}
+.githubImg:hover {
+  border-radius: 50%;
+  background-color: #ff9d35;
+  animation: blip 0.1s alternate-reverse infinite;
+}
+
+@keyframes blip {
+  0% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

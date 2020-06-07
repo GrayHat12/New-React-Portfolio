@@ -97,3 +97,41 @@ export const ReposQuery = `
   }
 }
 `;
+export const PullReqQuery = `
+{
+  user(login: "${settings.github_username}") {
+    pullRequests(first: 100) {
+      nodes {
+        additions
+        authorAssociation
+        changedFiles
+        closed
+        deletions
+        merged
+        repository {
+          name
+          nameWithOwner
+          url
+          homepageUrl
+          stargazers {
+            totalCount
+          }
+          forks {
+            totalCount
+          }
+        }
+        body
+        labels(first: 20) {
+          nodes {
+            name
+            color
+          }
+        }
+        title
+        url
+        state
+      }
+    }
+  }
+}
+`;

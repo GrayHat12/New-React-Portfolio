@@ -35,7 +35,7 @@ class Home extends React.Component {
       positionWorldWide: 0,
       worldWideAll: 0,
       updatedProfileAt: "",
-      profile: "https://profile.codersrank.io/user/"+secret.github_username,
+      profile: "https://profile.codersrank.io/user/" + secret.github_username,
     },
     animation: "nodiv",
     statList: [],
@@ -142,7 +142,9 @@ class Home extends React.Component {
   getGithubChildren() {
     return (
       <div className="statsChild">
-        <div className="stat item" title="Repositories"
+        <div
+          className="stat item"
+          title="Repositories"
           onClick={(event) => {
             this.props.history.push("/repos");
             event.preventDefault();
@@ -173,7 +175,14 @@ class Home extends React.Component {
           />
           <span className="statspan">{this.state.user.issuesCount}</span>
         </div>
-        <div className="stat item" title="Pull Requests">
+        <div
+          className="stat item"
+          title="Pull Requests"
+          onClick={(event) => {
+            this.props.history.push("/pullreqs");
+            event.preventDefault();
+          }}
+        >
           <img
             className="statspan"
             src="https://img.icons8.com/ultraviolet/48/000000/pull-request.png"
@@ -285,12 +294,40 @@ class Home extends React.Component {
         {this.state.codersrank.worldWideAll === 0 ? (
           <img src={loadingImg} alt="Loading" className="loading" />
         ) : (
-          <a href={this.state.codersrank.profile} target="_blank" rel="noopener noreferrer">
-          <div className="codersrank" title={"Top "+Math.ceil((this.state.codersrank.positionWorldWide/this.state.codersrank.worldWideAll)*100) + "% Worldwide"}>
-            <span className="scorecr">{this.state.codersrank.totalScore+" Points"}</span>
-            <span className="rankcr">{"Top "+Math.ceil((this.state.codersrank.positionWorldWide/this.state.codersrank.worldWideAll)*100) + "% Worldwide"}</span>
-            <span className="totalcr">Of total {parseInt(this.state.codersrank.worldWideAll/1000)}K users</span>
-          </div>
+          <a
+            href={this.state.codersrank.profile}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div
+              className="codersrank"
+              title={
+                "Top " +
+                Math.ceil(
+                  (this.state.codersrank.positionWorldWide /
+                    this.state.codersrank.worldWideAll) *
+                    100
+                ) +
+                "% Worldwide"
+              }
+            >
+              <span className="scorecr">
+                {this.state.codersrank.totalScore + " Points"}
+              </span>
+              <span className="rankcr">
+                {"Top " +
+                  Math.ceil(
+                    (this.state.codersrank.positionWorldWide /
+                      this.state.codersrank.worldWideAll) *
+                      100
+                  ) +
+                  "% Worldwide"}
+              </span>
+              <span className="totalcr">
+                Of total {parseInt(this.state.codersrank.worldWideAll / 1000)}K
+                users
+              </span>
+            </div>
           </a>
         )}
         <div
