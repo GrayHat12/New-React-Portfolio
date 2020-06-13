@@ -64,7 +64,7 @@ class Repositories extends React.Component {
             repoListData: reposData,
             loadComplete: true,
           });
-          this.clickedRepoItem(reposData.length - 1);
+          this.clickedRepoItem(reposData.length - 1,this.state.repoListData);
         } catch (ex) {
           console.error(ex);
         }
@@ -88,10 +88,11 @@ class Repositories extends React.Component {
     }
     return langs;
   }
-  clickedRepoItem(index) {
-    var repo = this.state.repoListData[index];
+  clickedRepoItem(index,repoListData) {
+    var repo = repoListData[index];
     var name = repo.name;
-    document.getElementsByTagName("title")[0].text = secret.github_username+"/"+name;
+    document.getElementsByTagName("title")[0].text =
+      secret.github_username + "/" + name;
     var selectedRepo = (
       <div className="RestScreen">
         <div className="imageDiv">
@@ -194,40 +195,53 @@ class Repositories extends React.Component {
     );
     this.setState({
       selectedRepo: selectedRepo,
-      selectedIndex: index,
+      selectedIndex: this.state.repoListData.indexOf(repoListData[index]),
     });
   }
-  generateRepoListHtm() {
+  generateRepoListHtm(repoData) {
     var outp = [];
-    for (var i = this.state.repoListData.length - 1; i >= 0; i--) {
+    var repoListData = [];
+    Object.assign(repoListData,repoData);
+    if(this.state.filters===3){
+      repoListData.sort((x,y) => {
+        if(x.isFork && y.isFork) return 0;
+        if(x.isFork) return -1;
+        if(y.isFork) return 1;
+        if(x.commits < y.commits) return -1;
+        if(x.commits > y.commits) return 1;
+        return 0;
+      });
+    }
+    for (var i = repoListData.length - 1; i >= 0; i--) {
       if (this.state.filters != null) {
         if (
           this.state.filters === 0 &&
-          (this.state.repoListData[i].isPrivate === true || this.state.repoListData[i].isFork === true)
+          (repoListData[i].isPrivate === true ||
+            repoListData[i].isFork === true)
         )
           continue;
         if (
           this.state.filters === 1 &&
-          this.state.repoListData[i].isPrivate === false
+          repoListData[i].isPrivate === false
         )
           continue;
         if (
           this.state.filters === 2 &&
-          this.state.repoListData[i].isFork === false
+          repoListData[i].isFork === false
         )
           continue;
       }
       var listitem = (
         <li
-          title={this.state.repoListData[i].name}
+          title={repoListData[i].name}
           className={
-            this.state.selectedIndex === i ? "repoItem selected" : "repoItem"
+            this.state.repoListData[this.state.selectedIndex] === repoListData[i] ? "repoItem selected" : "repoItem"
           }
           index={`${i}`}
-          onClick={this.clickedRepoItem.bind(this, i)}
+          onClick={this.clickedRepoItem.bind(this, i,repoListData)}
           key={i}
         >
-          {this.state.repoListData[i].isFork ? (
+          {repoListData[i].isFork ? (
             <img
               title="forked"
               index={`${i}`}
@@ -240,15 +254,23 @@ class Repositories extends React.Component {
               className="repoItemRight"
               index={`${i}`}
               title={
-                this.state.repoListData[i].isPrivate ? "Private" : "Public"
+                repoListData[i].isPrivate ? "Private" : "Public"
               }
             >
-            <img src={this.state.repoListData[i].isPrivate?"https://img.icons8.com/emoji/16/000000/red-circle-emoji.png":"https://img.icons8.com/emoji/16/000000/green-circle-emoji.png"}
-            alt={this.state.repoListData[i].isPrivate ? "Private" : "Public"}/>
+              <img
+                src={
+                  repoListData[i].isPrivate
+                    ? "https://img.icons8.com/emoji/16/000000/red-circle-emoji.png"
+                    : "https://img.icons8.com/emoji/16/000000/green-circle-emoji.png"
+                }
+                alt={
+                  repoListData[i].isPrivate ? "Private" : "Public"
+                }
+              />
             </span>
           )}
           <span index={`${i}`} className="repoItemLeft">
-            {this.state.repoListData[i].nameWithOwner}
+            {repoListData[i].nameWithOwner}
           </span>
         </li>
       );
@@ -276,13 +298,23 @@ class Repositories extends React.Component {
       });
       return;
     }
+    if (event.target.value === "Commits" && this.state.filters === 3) {
+      this.setState({
+        filters: null,
+      });
+      return;
+    }
     this.setState({
       filters:
         event.target.value === "Public"
           ? 0
           : event.target.value === "Private"
           ? 1
-          : 2,
+          : event.target.value === "Commits"
+          ? 3
+          : event.target.value === "Forked"
+          ? 2
+          : null,
     });
   }
   render() {
@@ -293,34 +325,50 @@ class Repositories extends React.Component {
             <div className="title">
               <span>REPOSITORIES</span>
               <div className="filters">
-                <input
-                  type="checkbox"
-                  className="check"
-                  onChange={this.changeFilter}
-                  checked={this.state.filters === 0 ? true : false}
-                  value="Public"
-                />
-                <label className="inputLabel">Public</label>
-                <input
-                  type="checkbox"
-                  className="check"
-                  onChange={this.changeFilter}
-                  checked={this.state.filters === 1 ? true : false}
-                  value="Private"
-                />
-                <label className="inputLabel">Private</label>
-                <input
-                  type="checkbox"
-                  className="check"
-                  onChange={this.changeFilter}
-                  checked={this.state.filters === 2 ? true : false}
-                  value="Forked"
-                />
-                <label className="inputLabel">Forked</label>
+                <div className="filterItem">
+                  <input
+                    type="checkbox"
+                    className="check"
+                    onChange={this.changeFilter}
+                    checked={this.state.filters === 0 ? true : false}
+                    value="Public"
+                  />
+                  <label className="inputLabel">Public</label>
+                </div>
+                <div className="filterItem">
+                  <input
+                    type="checkbox"
+                    className="check"
+                    onChange={this.changeFilter}
+                    checked={this.state.filters === 1 ? true : false}
+                    value="Private"
+                  />
+                  <label className="inputLabel">Private</label>
+                </div>
+                <div className="filterItem">
+                  <input
+                    type="checkbox"
+                    className="check"
+                    onChange={this.changeFilter}
+                    checked={this.state.filters === 2 ? true : false}
+                    value="Forked"
+                  />
+                  <label className="inputLabel">Forked</label>
+                </div>
+                <div className="filterItem">
+                  <input
+                    type="checkbox"
+                    className="check"
+                    onChange={this.changeFilter}
+                    checked={this.state.filters === 3 ? true : false}
+                    value="Commits"
+                  />
+                  <label className="inputLabel">Commits</label>
+                </div>
               </div>
             </div>
             <ol className="repoList">
-              {this.state.loadComplete ? this.generateRepoListHtm() : null}
+              {this.state.loadComplete ? this.generateRepoListHtm(this.state.repoListData) : null}
             </ol>
           </div>
         ) : (

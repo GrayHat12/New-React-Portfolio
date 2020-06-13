@@ -115,7 +115,7 @@ ol {
   border-radius: 5px;
 }
 .stat:hover {
-  border: 1px dashed #212E3A;
+  border: 1px dashed #212e3a;
   animation: blip 0.2s alternate-reverse infinite;
   padding: 5px;
   cursor: url("../assets/cursors/touch-pad/Touch-link.cur"), auto;
@@ -277,6 +277,10 @@ ol {
   text-align-last: center;
   padding: 2px;
   height: fit-content;
+}
+.filterItem {
+  width: fit-content;
+  display: inline-block;
 }
 .title:hover {
   animation: blip 0.1s alternate-reverse infinite;
