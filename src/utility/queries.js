@@ -39,7 +39,7 @@ query user {
       followers {
         totalCount
       }
-      registryPackages {
+      packages {
         totalCount
       }
     }

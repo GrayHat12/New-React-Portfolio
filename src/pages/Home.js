@@ -65,6 +65,7 @@ class Home extends React.Component {
     })
       .then((res) => {
         try {
+          console.log(res);
           var data = res.data.data.user;
           var user = this.state.user;
           //user.avatarUrl = data.avatarUrl;
@@ -85,7 +86,7 @@ class Home extends React.Component {
           user.starredRepositoriesCount = data.starredRepositories.totalCount;
           user.status = data.status.message;
           user.twitterUsername = data.twitterUsername;
-          user.packagesCount = data.registryPackages.totalCount;
+          user.packagesCount = data.packages.totalCount;
           this.setState({ user: user, animation: "stats" });
         } catch (err) {
           console.error(err);
